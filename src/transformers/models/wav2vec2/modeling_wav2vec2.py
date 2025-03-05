@@ -375,8 +375,6 @@ class Wav2Vec2PositionalConvEmbedding(nn.Module):
         )
 
         weight_norm = nn.utils.weight_norm
-        if hasattr(nn.utils.parametrizations, "weight_norm"):
-            weight_norm = nn.utils.parametrizations.weight_norm
 
         if is_deepspeed_zero3_enabled():
             import deepspeed
