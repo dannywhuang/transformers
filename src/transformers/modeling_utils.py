@@ -4576,16 +4576,11 @@ class PreTrainedModel(nn.Module, ModuleUtilsMixin, GenerationMixin, PushToHubMix
         # Rename weight norm parametrizations to match changes across torch versions.
         # Impacts a number of speech/wav2vec models. e.g. Hubert, Wav2Vec2, and others.
         # This rename is not logged.
-        if hasattr(nn.utils.parametrizations, "weight_norm"):
-            if key.endswith("weight_g"):
-                return key.replace("weight_g", "parametrizations.weight.original0"), True
-            if key.endswith("weight_v"):
-                return key.replace("weight_v", "parametrizations.weight.original1"), True
-        else:
-            if key.endswith("parametrizations.weight.original0"):
-                return key.replace("parametrizations.weight.original0", "weight_g"), True
-            if key.endswith("parametrizations.weight.original1"):
-                return key.replace("parametrizations.weight.original1", "weight_v"), True
+
+        if key.endswith("parametrizations.weight.original0"):
+            return key.replace("parametrizations.weight.original0", "weight_g"), True
+        if key.endswith("parametrizations.weight.original1"):
+            return key.replace("parametrizations.weight.original1", "weight_v"), True
 
         return key, False
 
